@@ -1,4 +1,4 @@
-# 🧮 Calculadora com Testes Unitários em Java
+# 🧮 Calculadora Modular com Testes de Integração
 
 <div align="center">
 
@@ -7,7 +7,7 @@
 ![Maven](https://img.shields.io/badge/Maven-3.9-blue)
 ![Status](https://img.shields.io/badge/Status-Concluído-success)
 
-Projeto desenvolvido para a disciplina de **Teste e Qualidade de Software**, com o objetivo de implementar uma calculadora contendo as quatro operações matemáticas fundamentais e seus respectivos testes unitários utilizando **JUnit 5**.
+Projeto desenvolvido para a disciplina de **Teste e Qualidade de Software**, com foco na implementação de uma calculadora modular e validação da comunicação entre módulos através de **Testes de Integração**.
 
 </div>
 
@@ -15,24 +15,81 @@ Projeto desenvolvido para a disciplina de **Teste e Qualidade de Software**, com
 
 # 📋 Sobre o Projeto
 
-Este projeto consiste na implementação de uma calculadora simples desenvolvida em **Java**, contendo as quatro operações matemáticas fundamentais:
+Este projeto implementa uma calculadora contendo as quatro operações matemáticas fundamentais:
 
 - ➕ Soma
 - ➖ Subtração
 - ✖️ Multiplicação
 - ➗ Divisão
 
-Além da implementação das operações, foram desenvolvidos testes unitários utilizando o framework **JUnit 5**, garantindo a validação dos resultados esperados e contribuindo para a qualidade do software.
+A aplicação foi desenvolvida utilizando uma arquitetura modular, dividindo as responsabilidades em componentes independentes, facilitando a manutenção, reutilização e realização de testes.
+
+Além dos testes unitários da calculadora, foram implementados testes de integração para validar a comunicação entre os módulos do sistema.
 
 ---
 
-# 🎯 Objetivos
+# 🎯 Objetivo
 
-- Implementar as operações fundamentais da matemática.
-- Aplicar conceitos de testes unitários.
-- Utilizar o framework JUnit 5.
-- Praticar a automação de testes.
-- Garantir a confiabilidade dos métodos desenvolvidos.
+Implementar um sistema de calculadora dividido em módulos independentes e garantir, através de testes automatizados, que a integração entre eles funcione corretamente.
+
+---
+
+# 🏗️ Arquitetura do Sistema
+
+O sistema foi dividido em três módulos principais:
+
+## 1️⃣ EntradaDados
+
+Responsável por:
+
+- Interagir com o usuário.
+- Capturar os valores numéricos informados.
+- Encaminhar os dados para o módulo de controle.
+
+---
+
+## 2️⃣ GerenciadorOperacao
+
+Responsável por:
+
+- Exibir o menu de operações.
+- Receber a opção escolhida pelo usuário.
+- Direcionar a execução para o método correto da calculadora.
+
+---
+
+## 3️⃣ Calculadora
+
+Responsável pela lógica de negócio.
+
+Implementa as operações:
+
+- Soma
+- Subtração
+- Multiplicação
+- Divisão
+
+Também realiza a validação para impedir divisão por zero.
+
+---
+
+# 🔄 Fluxo da Aplicação
+
+```text
+Usuário
+   │
+   ▼
+EntradaDados
+   │
+   ▼
+GerenciadorOperacao
+   │
+   ▼
+Calculadora
+   │
+   ▼
+Resultado
+```
 
 ---
 
@@ -41,7 +98,7 @@ Além da implementação das operações, foram desenvolvidos testes unitários 
 | Tecnologia | Finalidade |
 |------------|------------|
 | Java 17 | Linguagem de programação |
-| JUnit 5 | Framework de testes unitários |
+| JUnit 5 | Testes unitários e integração |
 | Maven | Gerenciamento de dependências |
 | IntelliJ IDEA | Ambiente de desenvolvimento |
 
@@ -50,7 +107,7 @@ Além da implementação das operações, foram desenvolvidos testes unitários 
 # 📂 Estrutura do Projeto
 
 ```text
-CalculadoraJUnit
+CalculadoraIntegracao
 │
 ├── pom.xml
 │
@@ -58,12 +115,16 @@ CalculadoraJUnit
     ├── main
     │   └── java
     │       └── negocio
-    │           └── Calculadora.java
+    │           ├── Calculadora.java
+    │           ├── EntradaDados.java
+    │           ├── GerenciadorOperacao.java
+    │           └── Main.java
     │
     └── test
         └── java
             └── negocio
-                └── CalculadoraTest.java
+                ├── CalculadoraTest.java
+                └── IntegracaoCalculadoraTest.java
 ```
 
 ---
@@ -74,7 +135,7 @@ CalculadoraJUnit
 
 Realiza a soma entre dois números.
 
-**Exemplo:**
+Exemplo:
 
 ```text
 10 + 5 = 15
@@ -86,7 +147,7 @@ Realiza a soma entre dois números.
 
 Realiza a subtração entre dois números.
 
-**Exemplo:**
+Exemplo:
 
 ```text
 10 - 5 = 5
@@ -98,10 +159,10 @@ Realiza a subtração entre dois números.
 
 Realiza a multiplicação entre dois números.
 
-**Exemplo:**
+Exemplo:
 
 ```text
-10 * 5 = 50
+10 × 5 = 50
 ```
 
 ---
@@ -110,15 +171,19 @@ Realiza a multiplicação entre dois números.
 
 Realiza a divisão entre dois números.
 
-**Exemplo:**
+Exemplo:
 
 ```text
-10 / 5 = 2
+10 ÷ 5 = 2
 ```
 
-### Tratamento de Erro
+---
 
-Caso seja realizada uma tentativa de divisão por zero, o sistema lança uma exceção:
+## Tratamento de Exceções
+
+A aplicação impede divisões por zero.
+
+Exemplo:
 
 ```text
 Não é possível dividir por zero.
@@ -128,15 +193,47 @@ Não é possível dividir por zero.
 
 # 🧪 Testes Unitários
 
-Foram implementados testes para validar:
+Os testes unitários validam individualmente os métodos da classe Calculadora.
+
+Foram implementados testes para:
 
 - ✅ Soma
 - ✅ Subtração
 - ✅ Multiplicação
 - ✅ Divisão
-- ✅ Tratamento de divisão por zero
+- ✅ Divisão por zero
 
-Cada teste executa cenários diferentes e compara os resultados obtidos com os resultados esperados.
+Objetivo:
+
+Garantir que cada método funcione corretamente de forma isolada.
+
+---
+
+# 🔗 Testes de Integração
+
+Os testes de integração validam a comunicação entre os módulos do sistema.
+
+Fluxo testado:
+
+```text
+GerenciadorOperacao
+        ↓
+Calculadora
+        ↓
+Resultado
+```
+
+Foram criados cenários para verificar:
+
+- ✅ Integração da Soma
+- ✅ Integração da Subtração
+- ✅ Integração da Multiplicação
+- ✅ Integração da Divisão
+- ✅ Tratamento de operação inválida
+
+Objetivo:
+
+Garantir que os módulos se comuniquem corretamente e produzam o resultado esperado.
 
 ---
 
@@ -145,15 +242,15 @@ Cada teste executa cenários diferentes e compara os resultados obtidos com os r
 ## Clonar o Repositório
 
 ```bash
-git clone https://github.com/SEU-USUARIO/CalculadoraJUnit.git
+git clone https://github.com/SEU-USUARIO/CalculadoraIntegracao.git
 ```
 
 ---
 
-## Acessar a Pasta
+## Entrar na Pasta
 
 ```bash
-cd CalculadoraJUnit
+cd CalculadoraIntegracao
 ```
 
 ---
@@ -166,11 +263,14 @@ Via Maven:
 mvn test
 ```
 
-Ou diretamente pelo IntelliJ IDEA:
+Ou pelo IntelliJ IDEA:
 
 ```text
 Botão direito em CalculadoraTest
-→ Run 'CalculadoraTest'
+→ Run Tests
+
+Botão direito em IntegracaoCalculadoraTest
+→ Run Tests
 ```
 
 ---
@@ -178,43 +278,26 @@ Botão direito em CalculadoraTest
 # 📊 Resultado Esperado
 
 ```text
-5 tests passed
-5 tests total
+Tests passed
 ```
 
-Todos os testes devem ser executados com sucesso.
-
----
-
-# 🔍 Exemplo de Saída dos Testes
-
-```text
-==================================
-Iniciando execução do teste...
-Testando operação de Soma
-Teste executado com sucesso!
-==================================
-
-==================================
-Iniciando execução do teste...
-Testando operação de Subtração
-Teste executado com sucesso!
-==================================
-```
+Todos os testes unitários e de integração devem ser executados com sucesso.
 
 ---
 
 # 📚 Conceitos Aplicados
 
-Durante o desenvolvimento foram aplicados os seguintes conceitos:
+Durante o desenvolvimento foram utilizados os seguintes conceitos:
 
 - Programação Orientada a Objetos (POO)
-- Encapsulamento
+- Separação de Responsabilidades
+- Modularização de Sistemas
 - Testes Unitários
+- Testes de Integração
 - Tratamento de Exceções
-- Automação de Testes
 - Maven
 - JUnit 5
+- Boas Práticas de Desenvolvimento
 
 ---
 
@@ -222,12 +305,12 @@ Durante o desenvolvimento foram aplicados os seguintes conceitos:
 
 **Douglas Magalhães**
 
-Disciplina: **Teste e Qualidade de Software**
+Disciplina: Teste e Qualidade de Software
 
-Universidade: **UNIVEL**
+Projeto acadêmico desenvolvido para estudo e aplicação prática de testes unitários e testes de integração utilizando Java.
 
 ---
 
 # 📄 Licença
 
-Este projeto foi desenvolvido exclusivamente para fins acadêmicos.
+Projeto desenvolvido exclusivamente para fins acadêmicos e educacionais.
